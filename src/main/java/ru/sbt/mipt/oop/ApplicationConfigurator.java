@@ -20,10 +20,12 @@ public class ApplicationConfigurator {
         Application application = new Application(eventLoop);
 
         EventHandler lightEventHandler = new LightEventHandler(smartHome, logger);
-        EventHandler doorEventHandler = new DoorEventHandler(smartHome, logger, sender);
+        EventHandler doorEventHandler = new DoorEventHandler(smartHome, logger);
+        EventHandler hallDoorEventHandler = new HallDoorEventHandler(smartHome, sender);
 
         handlerCollection.addHandler(lightEventHandler);
         handlerCollection.addHandler(doorEventHandler);
+        handlerCollection.addHandler(hallDoorEventHandler);
 
         application.run();
     }

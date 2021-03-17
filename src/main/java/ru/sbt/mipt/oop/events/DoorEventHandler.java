@@ -1,5 +1,6 @@
 package ru.sbt.mipt.oop.events;
 
+import ru.sbt.mipt.oop.actions.SmartHomeActions;
 import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.commands.*;
 import ru.sbt.mipt.oop.objects.*;
@@ -9,13 +10,11 @@ import static ru.sbt.mipt.oop.events.SensorEventType.DOOR_OPEN;
 
 public class DoorEventHandler implements EventHandler {
     private final Logger logger;
-    private final CommandSender sender;
     private final SmartHome smartHome;
 
-    public DoorEventHandler(SmartHome smartHome, Logger logger, CommandSender sender) {
+    public DoorEventHandler(SmartHome smartHome, Logger logger) {
         this.smartHome = smartHome;
         this.logger = logger;
-        this.sender = sender;
     }
 
     @Override
@@ -29,11 +28,6 @@ public class DoorEventHandler implements EventHandler {
                             openDoor(room, door);
                         } else {
                             closeDoor(room, door);
-                            // если мы получили событие о закрытие двери в холле - это значит, что была закрыта входная дверь.
-                            // в этом случае мы хотим автоматически выключить свет во всем доме (это же умный дом!)
-                            if (room.getName().equals("hall")) {
-                                turnOffLightInHome(smartHome);
-                            }
                         }
                     }
                 }
@@ -41,23 +35,13 @@ public class DoorEventHandler implements EventHandler {
         }
     }
 
-    private void turnOffLightInHome(SmartHome smartHome) {
-        for (Room homeRoom : smartHome.getRooms()) {
-            for (Light light : homeRoom.getLights()) {
-                light.setOn(false);
-                SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
-                sender.sendCommand(command);
-            }
-        }
-    }
-
     private void closeDoor(Room room, Door door) {
-        door.setOpen(false);
+        SmartHomeActions.closeDoor(door);
         logger.log("Door " + door.getId() + " in room " + room.getName() + " was closed.");
     }
 
     private void openDoor(Room room, Door door) {
-        door.setOpen(true);
+        SmartHomeActions.openDoor(door);
         logger.log("Door " + door.getId() + " in room " + room.getName() + " was opened.");
     }
 }

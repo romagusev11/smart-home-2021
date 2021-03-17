@@ -10,14 +10,16 @@ import static ru.sbt.mipt.oop.events.SensorEventType.DOOR_OPEN;
 public class DoorEventHandler implements EventHandler {
     private final Logger logger;
     private final CommandSender sender;
+    private final SmartHome smartHome;
 
-    public DoorEventHandler(Logger logger, CommandSender sender) {
+    public DoorEventHandler(SmartHome smartHome, Logger logger, CommandSender sender) {
+        this.smartHome = smartHome;
         this.logger = logger;
         this.sender = sender;
     }
 
     @Override
-    public void handleEvent(SmartHome smartHome, SensorEvent event) {
+    public void handleEvent(SensorEvent event) {
         if (event.getType() == DOOR_OPEN || event.getType() == DOOR_CLOSED) {
             // событие от двери
             for (Room room : smartHome.getRooms()) {

@@ -14,7 +14,8 @@ public class FileSmartHomeReader implements SmartHomeReader {
         this.filename = filename;
     }
 
-    public SmartHome getSmartHome() {
+    @Override
+    public SmartHome readSmartHome() {
         Gson gson = new Gson();
         try {
             String json = new String(Files.readAllBytes(Paths.get(filename)));

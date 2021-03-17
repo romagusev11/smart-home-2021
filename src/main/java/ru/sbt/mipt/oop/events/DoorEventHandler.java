@@ -1,9 +1,9 @@
 package ru.sbt.mipt.oop.events;
 
-import ru.sbt.mipt.oop.actions.SmartHomeActions;
+import ru.sbt.mipt.oop.actions.CloseDoorAction;
+import ru.sbt.mipt.oop.actions.OpenDoorAction;
 import ru.sbt.mipt.oop.io.Logger;
-import ru.sbt.mipt.oop.commands.*;
-import ru.sbt.mipt.oop.objects.*;
+import ru.sbt.mipt.oop.objects.SmartHome;
 
 import static ru.sbt.mipt.oop.events.SensorEventType.DOOR_CLOSED;
 import static ru.sbt.mipt.oop.events.SensorEventType.DOOR_OPEN;
@@ -19,29 +19,22 @@ public class DoorEventHandler implements EventHandler {
 
     @Override
     public void handleEvent(SensorEvent event) {
-        if (event.getType() == DOOR_OPEN || event.getType() == DOOR_CLOSED) {
-            // событие от двери
-            for (Room room : smartHome.getRooms()) {
-                for (Door door : room.getDoors()) {
-                    if (door.getId().equals(event.getObjectId())) {
-                        if (event.getType() == DOOR_OPEN) {
-                            openDoor(room, door);
-                        } else {
-                            closeDoor(room, door);
-                        }
-                    }
-                }
-            }
+        if (event.getType() == DOOR_OPEN) {
+            openDoor(event.getObjectId());
+        }
+
+        if (event.getType() == DOOR_CLOSED) {
+            closeDoor(event.getObjectId());
         }
     }
 
-    private void closeDoor(Room room, Door door) {
-        SmartHomeActions.closeDoor(door);
-        logger.log("Door " + door.getId() + " in room " + room.getName() + " was closed.");
+    private void closeDoor(String doorId) {
+        smartHome.execute(new CloseDoorAction(doorId));
+        logger.log("Door " + doorId + " was closed.");
     }
 
-    private void openDoor(Room room, Door door) {
-        SmartHomeActions.openDoor(door);
-        logger.log("Door " + door.getId() + " in room " + room.getName() + " was opened.");
+    private void openDoor(String doorId) {
+        smartHome.execute(new OpenDoorAction(doorId));
+        logger.log("Door " + doorId + " was opened.");
     }
 }

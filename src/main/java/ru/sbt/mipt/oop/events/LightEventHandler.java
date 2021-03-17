@@ -1,7 +1,9 @@
 package ru.sbt.mipt.oop.events;
 
+import ru.sbt.mipt.oop.actions.TurnLightOffAction;
+import ru.sbt.mipt.oop.actions.TurnLightOnAction;
 import ru.sbt.mipt.oop.io.Logger;
-import ru.sbt.mipt.oop.objects.*;
+import ru.sbt.mipt.oop.objects.SmartHome;
 
 import static ru.sbt.mipt.oop.events.SensorEventType.LIGHT_OFF;
 import static ru.sbt.mipt.oop.events.SensorEventType.LIGHT_ON;
@@ -17,29 +19,21 @@ public class LightEventHandler implements EventHandler {
 
     @Override
     public void handleEvent(SensorEvent event) {
-        if (event.getType() == LIGHT_ON || event.getType() == LIGHT_OFF) {
-            // событие от источника света
-            for (Room room : smartHome.getRooms()) {
-                for (Light light : room.getLights()) {
-                    if (light.getId().equals(event.getObjectId())) {
-                        if (event.getType() == LIGHT_ON) {
-                            turnLightOn(room, light);
-                        } else {
-                            turnLightOff(room, light);
-                        }
-                    }
-                }
-            }
+        if (event.getType() == LIGHT_ON) {
+            turnLightOn(event.getObjectId());
+        }
+        if (event.getType() == LIGHT_OFF) {
+            turnLightOff(event.getObjectId());
         }
     }
 
-    private void turnLightOff(Room room, Light light) {
-        light.setOn(false);
-        logger.log("Light " + light.getId() + " in room " + room.getName() + " was turned off.");
+    private void turnLightOff(String lightId) {
+        smartHome.execute(new TurnLightOffAction(lightId));
+        logger.log("Light " + lightId + " was turned off.");
     }
 
-    private void turnLightOn(Room room, Light light) {
-        light.setOn(true);
-        logger.log("Light " + light.getId() + " in room " + room.getName() + " was turned on.");
+    private void turnLightOn(String lightId) {
+        smartHome.execute(new TurnLightOnAction(lightId));
+        logger.log("Light " + lightId + " was turned on.");
     }
 }

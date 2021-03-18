@@ -28,12 +28,18 @@ public class LightEventHandler implements EventHandler {
     }
 
     private void turnLightOff(String lightId) {
-        smartHome.execute(new TurnLightOffAction(lightId));
-        logger.log("Light " + lightId + " was turned off.");
+        TurnLightOffAction action = new TurnLightOffAction(lightId);
+        smartHome.execute(action);
+        if (action.payload()) {
+            logger.log("Light " + lightId + " was turned off.");
+        }
     }
 
     private void turnLightOn(String lightId) {
-        smartHome.execute(new TurnLightOnAction(lightId));
-        logger.log("Light " + lightId + " was turned on.");
+        TurnLightOnAction action = new TurnLightOnAction(lightId);
+        smartHome.execute(action);
+        if (action.payload()) {
+            logger.log("Light " + lightId + " was turned on.");
+        }
     }
 }

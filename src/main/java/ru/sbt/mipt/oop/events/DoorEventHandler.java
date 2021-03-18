@@ -29,12 +29,18 @@ public class DoorEventHandler implements EventHandler {
     }
 
     private void closeDoor(String doorId) {
-        smartHome.execute(new CloseDoorAction(doorId));
-        logger.log("Door " + doorId + " was closed.");
+        CloseDoorAction action = new CloseDoorAction(doorId);
+        smartHome.execute(action);
+        if (action.payload()) {
+            logger.log("Door " + doorId + " was closed.");
+        }
     }
 
     private void openDoor(String doorId) {
-        smartHome.execute(new OpenDoorAction(doorId));
-        logger.log("Door " + doorId + " was opened.");
+        OpenDoorAction action = new OpenDoorAction(doorId);
+        smartHome.execute(action);
+        if (action.payload()) {
+            logger.log("Door " + doorId + " was opened.");
+        }
     }
 }

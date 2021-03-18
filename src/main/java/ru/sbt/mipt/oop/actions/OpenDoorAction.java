@@ -4,6 +4,7 @@ import ru.sbt.mipt.oop.objects.Door;
 
 public class OpenDoorAction implements Action {
     private final String doorId;
+    private boolean result = false;
 
     public OpenDoorAction(String doorId) {
         this.doorId = doorId;
@@ -15,7 +16,12 @@ public class OpenDoorAction implements Action {
             Door door = (Door) object;
             if (door.getId().equals(doorId)) {
                 door.setOpen(true);
+                result = true;
             }
         }
+    }
+
+    public boolean payload() {
+        return result;
     }
 }

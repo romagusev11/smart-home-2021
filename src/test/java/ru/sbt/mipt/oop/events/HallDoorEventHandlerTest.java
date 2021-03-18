@@ -50,12 +50,12 @@ public class HallDoorEventHandlerTest {
     @Test
     public void openHallDoorTest() {
         String hallDoorId = "4";
-        String lightId = "4";
+        String lightId = "2";
 
         FindLightByIdAction findLightByIdAction = new FindLightByIdAction(lightId);
         smartHome.execute(findLightByIdAction);
         Light light = findLightByIdAction.payload();
-        assertFalse(light.isOn());
+        assertTrue(light.isOn());
 
         IsDoorInRoomAction action = new IsDoorInRoomAction(hallDoorId, "hall");
         smartHome.execute(action);
@@ -64,6 +64,6 @@ public class HallDoorEventHandlerTest {
         SensorEvent event = new SensorEvent(SensorEventType.DOOR_OPEN, hallDoorId);
         hallDoorEventHandler.handleEvent(event);
 
-        assertFalse(light.isOn());
+        assertTrue(light.isOn());
     }
 }

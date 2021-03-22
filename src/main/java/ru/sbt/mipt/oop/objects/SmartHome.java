@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.objects;
 
 import java.util.ArrayList;
 import java.util.Collection;

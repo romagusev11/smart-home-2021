@@ -1,13 +1,13 @@
-package ru.sbt.mipt.oop.events;
+package ru.sbt.mipt.oop.sensors;
 
 import ru.sbt.mipt.oop.actions.IsDoorInRoomAction;
 import ru.sbt.mipt.oop.actions.TurnOffLightInHomeAction;
 import ru.sbt.mipt.oop.commands.CommandSender;
 import ru.sbt.mipt.oop.objects.SmartHome;
 
-import static ru.sbt.mipt.oop.events.SensorEventType.DOOR_CLOSED;
+import static ru.sbt.mipt.oop.sensors.SensorEventType.DOOR_CLOSED;
 
-public class HallDoorEventHandler implements EventHandler{
+public class HallDoorEventHandler implements SensorEventHandler {
     private final CommandSender sender;
     private final SmartHome smartHome;
 

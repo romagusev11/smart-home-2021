@@ -8,6 +8,10 @@ import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.Door;
 import ru.sbt.mipt.oop.objects.SmartHome;
+import ru.sbt.mipt.oop.sensors.DoorEventHandler;
+import ru.sbt.mipt.oop.sensors.SensorEvent;
+import ru.sbt.mipt.oop.sensors.SensorEventHandler;
+import ru.sbt.mipt.oop.sensors.SensorEventType;
 
 import java.util.Random;
 
@@ -15,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DoorEventHandlerTest {
-    private EventHandler doorEventHandler;
+    private SensorEventHandler doorSensorEventHandler;
     private SmartHome smartHome;
 
     @BeforeEach
@@ -25,7 +29,7 @@ public class DoorEventHandlerTest {
         smartHome = reader.readSmartHome();
 
         Logger logger = str -> {};
-        doorEventHandler = new DoorEventHandler(smartHome, logger);
+        doorSensorEventHandler = new DoorEventHandler(smartHome, logger);
     }
 
     @Test
@@ -39,7 +43,7 @@ public class DoorEventHandlerTest {
         assertFalse(door.isOpen());
 
         SensorEvent event = new SensorEvent(SensorEventType.DOOR_OPEN, doorId);
-        doorEventHandler.handleEvent(event);
+        doorSensorEventHandler.handleEvent(event);
         assertTrue(door.isOpen());
     }
 
@@ -54,7 +58,7 @@ public class DoorEventHandlerTest {
         assertTrue(door.isOpen());
 
         SensorEvent event = new SensorEvent(SensorEventType.DOOR_CLOSED, doorId);
-        doorEventHandler.handleEvent(event);
+        doorSensorEventHandler.handleEvent(event);
         assertFalse(door.isOpen());
     }
 
@@ -71,10 +75,10 @@ public class DoorEventHandlerTest {
         for (int i = 0; i < 100; ++i) {
             boolean monkeyChoice = random.nextBoolean();
             if (monkeyChoice) {
-                doorEventHandler.handleEvent(new SensorEvent(SensorEventType.DOOR_OPEN, doorId));
+                doorSensorEventHandler.handleEvent(new SensorEvent(SensorEventType.DOOR_OPEN, doorId));
                 assertTrue(door.isOpen());
             } else {
-                doorEventHandler.handleEvent(new SensorEvent(SensorEventType.DOOR_CLOSED, doorId));
+                doorSensorEventHandler.handleEvent(new SensorEvent(SensorEventType.DOOR_CLOSED, doorId));
                 assertFalse(door.isOpen());
             }
         }

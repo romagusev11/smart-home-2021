@@ -8,6 +8,10 @@ import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.objects.SmartHome;
+import ru.sbt.mipt.oop.sensors.LightEventHandler;
+import ru.sbt.mipt.oop.sensors.SensorEvent;
+import ru.sbt.mipt.oop.sensors.SensorEventHandler;
+import ru.sbt.mipt.oop.sensors.SensorEventType;
 
 import java.util.Random;
 
@@ -15,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LightEventHandlerTest {
-    private EventHandler lightEventHandler;
+    private SensorEventHandler lightSensorEventHandler;
     private SmartHome smartHome;
 
     @BeforeEach
@@ -25,7 +29,7 @@ public class LightEventHandlerTest {
         smartHome = reader.readSmartHome();
 
         Logger logger = str -> {};
-        lightEventHandler = new LightEventHandler(smartHome, logger);
+        lightSensorEventHandler = new LightEventHandler(smartHome, logger);
     }
 
     @Test
@@ -39,7 +43,7 @@ public class LightEventHandlerTest {
         assertFalse(light.isOn());
 
         SensorEvent event = new SensorEvent(SensorEventType.LIGHT_ON, lightId);
-        lightEventHandler.handleEvent(event);
+        lightSensorEventHandler.handleEvent(event);
         assertTrue(light.isOn());
     }
 
@@ -54,7 +58,7 @@ public class LightEventHandlerTest {
         assertTrue(light.isOn());
 
         SensorEvent event = new SensorEvent(SensorEventType.LIGHT_OFF, lightId);
-        lightEventHandler.handleEvent(event);
+        lightSensorEventHandler.handleEvent(event);
         assertFalse(light.isOn());
     }
 
@@ -71,10 +75,10 @@ public class LightEventHandlerTest {
         for (int i = 0; i < 100; ++i) {
             boolean monkeyChoice = random.nextBoolean();
             if (monkeyChoice) {
-                lightEventHandler.handleEvent(new SensorEvent(SensorEventType.LIGHT_ON, lightId));
+                lightSensorEventHandler.handleEvent(new SensorEvent(SensorEventType.LIGHT_ON, lightId));
                 assertTrue(light.isOn());
             } else {
-                lightEventHandler.handleEvent(new SensorEvent(SensorEventType.LIGHT_OFF, lightId));
+                lightSensorEventHandler.handleEvent(new SensorEvent(SensorEventType.LIGHT_OFF, lightId));
                 assertFalse(light.isOn());
             }
         }

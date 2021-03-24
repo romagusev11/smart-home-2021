@@ -10,12 +10,16 @@ import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.objects.SmartHome;
+import ru.sbt.mipt.oop.sensors.HallDoorEventHandler;
+import ru.sbt.mipt.oop.sensors.SensorEvent;
+import ru.sbt.mipt.oop.sensors.SensorEventHandler;
+import ru.sbt.mipt.oop.sensors.SensorEventType;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HallDoorEventHandlerTest {
-    private EventHandler hallDoorEventHandler;
+    private SensorEventHandler hallDoorSensorEventHandler;
     private SmartHome smartHome;
 
     @BeforeEach
@@ -25,7 +29,7 @@ public class HallDoorEventHandlerTest {
         smartHome = reader.readSmartHome();
 
         CommandSender sender = str -> {};
-        hallDoorEventHandler = new HallDoorEventHandler(smartHome, sender);
+        hallDoorSensorEventHandler = new HallDoorEventHandler(smartHome, sender);
     }
 
     @Test
@@ -37,7 +41,7 @@ public class HallDoorEventHandlerTest {
         assertTrue(action.payload());
 
         SensorEvent event = new SensorEvent(SensorEventType.DOOR_CLOSED, hallDoorId);
-        hallDoorEventHandler.handleEvent(event);
+        hallDoorSensorEventHandler.handleEvent(event);
 
         Action assertAllLightIsOffAction = object -> {
             if (object instanceof Light) {
@@ -62,7 +66,7 @@ public class HallDoorEventHandlerTest {
         assertTrue(action.payload());
 
         SensorEvent event = new SensorEvent(SensorEventType.DOOR_OPEN, hallDoorId);
-        hallDoorEventHandler.handleEvent(event);
+        hallDoorSensorEventHandler.handleEvent(event);
 
         assertTrue(light.isOn());
     }

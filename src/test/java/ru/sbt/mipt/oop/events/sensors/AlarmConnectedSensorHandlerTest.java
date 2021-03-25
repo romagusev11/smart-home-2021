@@ -1,11 +1,11 @@
-package ru.sbt.mipt.oop.alarm;
+package ru.sbt.mipt.oop.events.sensors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.actions.FindDoorByIdAction;
 import ru.sbt.mipt.oop.actions.FindLightByIdAction;
+import ru.sbt.mipt.oop.alarm.Alarm;
 import ru.sbt.mipt.oop.alarm.state.OnAlertState;
-import ru.sbt.mipt.oop.events.sensors.*;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.io.SmartHomeReader;

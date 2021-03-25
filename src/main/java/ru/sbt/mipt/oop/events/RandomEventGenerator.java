@@ -1,7 +1,7 @@
 package ru.sbt.mipt.oop.events;
 
-import ru.sbt.mipt.oop.sensors.SensorEvent;
-import ru.sbt.mipt.oop.sensors.SensorEventType;
+import ru.sbt.mipt.oop.events.sensors.SensorEvent;
+import ru.sbt.mipt.oop.events.sensors.SensorEventType;
 
 public class RandomEventGenerator implements EventGenerator {
     @Override

@@ -1,23 +1,19 @@
 package ru.sbt.mipt.oop;
 
 import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.alarm.AlarmConnectedSensorHandler;
-import ru.sbt.mipt.oop.alarm.AlarmEventHandler;
 import ru.sbt.mipt.oop.commands.CommandSender;
 import ru.sbt.mipt.oop.commands.ConsoleCommandSender;
 import ru.sbt.mipt.oop.events.EventGenerator;
 import ru.sbt.mipt.oop.events.EventLoop;
 import ru.sbt.mipt.oop.events.EventLoopImpl;
 import ru.sbt.mipt.oop.events.RandomEventGenerator;
+import ru.sbt.mipt.oop.events.alarm.AlarmEventHandler;
+import ru.sbt.mipt.oop.events.sensors.*;
 import ru.sbt.mipt.oop.io.ConsoleLogger;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.SmartHome;
-import ru.sbt.mipt.oop.sensors.DoorEventHandler;
-import ru.sbt.mipt.oop.sensors.HallDoorEventHandler;
-import ru.sbt.mipt.oop.sensors.LightEventHandler;
-import ru.sbt.mipt.oop.sensors.SensorEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;

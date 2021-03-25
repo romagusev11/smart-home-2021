@@ -5,7 +5,7 @@ import ru.sbt.mipt.oop.alarm.state.DeactivatedState;
 
 import java.util.Objects;
 
-public class Alarm {
+public class Alarm implements AlarmState {
     private AlarmState state;
     private String code;
 
@@ -39,5 +39,9 @@ public class Alarm {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public void react(AlarmReactor reactor) {
+        state.react(reactor);
     }
 }

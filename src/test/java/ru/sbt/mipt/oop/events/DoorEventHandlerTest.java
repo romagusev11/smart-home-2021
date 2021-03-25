@@ -3,15 +3,15 @@ package ru.sbt.mipt.oop.events;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.actions.FindDoorByIdAction;
+import ru.sbt.mipt.oop.events.sensors.DoorEventHandler;
+import ru.sbt.mipt.oop.events.sensors.SensorEvent;
+import ru.sbt.mipt.oop.events.sensors.SensorEventHandler;
+import ru.sbt.mipt.oop.events.sensors.SensorEventType;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.Door;
 import ru.sbt.mipt.oop.objects.SmartHome;
-import ru.sbt.mipt.oop.sensors.DoorEventHandler;
-import ru.sbt.mipt.oop.sensors.SensorEvent;
-import ru.sbt.mipt.oop.sensors.SensorEventHandler;
-import ru.sbt.mipt.oop.sensors.SensorEventType;
 
 import java.util.Random;
 

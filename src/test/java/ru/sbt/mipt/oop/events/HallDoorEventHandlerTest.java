@@ -6,14 +6,14 @@ import ru.sbt.mipt.oop.actions.Action;
 import ru.sbt.mipt.oop.actions.FindLightByIdAction;
 import ru.sbt.mipt.oop.actions.IsDoorInRoomAction;
 import ru.sbt.mipt.oop.commands.CommandSender;
+import ru.sbt.mipt.oop.events.sensors.HallDoorEventHandler;
+import ru.sbt.mipt.oop.events.sensors.SensorEvent;
+import ru.sbt.mipt.oop.events.sensors.SensorEventHandler;
+import ru.sbt.mipt.oop.events.sensors.SensorEventType;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.objects.SmartHome;
-import ru.sbt.mipt.oop.sensors.HallDoorEventHandler;
-import ru.sbt.mipt.oop.sensors.SensorEvent;
-import ru.sbt.mipt.oop.sensors.SensorEventHandler;
-import ru.sbt.mipt.oop.sensors.SensorEventType;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

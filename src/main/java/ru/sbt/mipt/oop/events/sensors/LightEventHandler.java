@@ -1,12 +1,12 @@
-package ru.sbt.mipt.oop.sensors;
+package ru.sbt.mipt.oop.events.sensors;
 
 import ru.sbt.mipt.oop.actions.TurnLightOffAction;
 import ru.sbt.mipt.oop.actions.TurnLightOnAction;
 import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.objects.SmartHome;
 
-import static ru.sbt.mipt.oop.sensors.SensorEventType.LIGHT_OFF;
-import static ru.sbt.mipt.oop.sensors.SensorEventType.LIGHT_ON;
+import static ru.sbt.mipt.oop.events.sensors.SensorEventType.LIGHT_OFF;
+import static ru.sbt.mipt.oop.events.sensors.SensorEventType.LIGHT_ON;
 
 public class LightEventHandler implements SensorEventHandler {
     private final Logger logger;

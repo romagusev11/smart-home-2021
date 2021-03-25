@@ -1,10 +1,10 @@
 package ru.sbt.mipt.oop.events;
 
-import ru.sbt.mipt.oop.alarm.AlarmEvent;
-import ru.sbt.mipt.oop.alarm.AlarmEventHandler;
+import ru.sbt.mipt.oop.events.alarm.AlarmEvent;
+import ru.sbt.mipt.oop.events.alarm.AlarmEventHandler;
+import ru.sbt.mipt.oop.events.sensors.SensorEvent;
+import ru.sbt.mipt.oop.events.sensors.SensorEventHandler;
 import ru.sbt.mipt.oop.io.Logger;
-import ru.sbt.mipt.oop.sensors.SensorEvent;
-import ru.sbt.mipt.oop.sensors.SensorEventHandler;
 
 import java.util.Collection;
 

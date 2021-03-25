@@ -1,4 +1,6 @@
-package ru.sbt.mipt.oop.alarm;
+package ru.sbt.mipt.oop.events.alarm;
+
+import ru.sbt.mipt.oop.alarm.Alarm;
 
 public class AlarmEventHandler {
     private final Alarm alarm;

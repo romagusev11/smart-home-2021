@@ -1,6 +1,7 @@
 package ru.sbt.mipt.oop.alarm.state;
 
 import ru.sbt.mipt.oop.alarm.Alarm;
+import ru.sbt.mipt.oop.alarm.AlarmReactor;
 
 public class ActivatedState implements AlarmState {
     private final Alarm alarm;
@@ -26,5 +27,10 @@ public class ActivatedState implements AlarmState {
     @Override
     public void setOnAlert() {
         alarm.changeState(new OnAlertState(alarm));
+    }
+
+    @Override
+    public void react(AlarmReactor reactor) {
+        reactor.onAlarmActivatedState();
     }
 }

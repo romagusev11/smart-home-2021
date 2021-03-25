@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.alarm.state.ActivatedState;
 import ru.sbt.mipt.oop.alarm.state.DeactivatedState;
 import ru.sbt.mipt.oop.alarm.state.OnAlertState;
+import ru.sbt.mipt.oop.events.alarm.AlarmEvent;
+import ru.sbt.mipt.oop.events.alarm.AlarmEventHandler;
+import ru.sbt.mipt.oop.events.alarm.AlarmEventType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -3,6 +3,8 @@ package ru.sbt.mipt.oop.alarm;
 import ru.sbt.mipt.oop.alarm.state.AlarmState;
 import ru.sbt.mipt.oop.alarm.state.DeactivatedState;
 
+import java.util.Objects;
+
 public class Alarm {
     private AlarmState state;
     private String code;
@@ -31,8 +33,8 @@ public class Alarm {
         return state;
     }
 
-    public String getCode() {
-        return code;
+    public boolean isCorrectCode(String code) {
+        return Objects.equals(code, this.code);
     }
 
     public void setCode(String code) {

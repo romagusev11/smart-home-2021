@@ -22,6 +22,6 @@ public class DeactivatedState implements AlarmState {
 
     @Override
     public void setOnAlert() {
-        // Do nothing
+        alarm.changeState(new OnAlertState(alarm));
     }
 }

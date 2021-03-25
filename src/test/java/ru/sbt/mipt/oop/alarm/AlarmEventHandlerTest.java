@@ -7,6 +7,7 @@ import ru.sbt.mipt.oop.alarm.state.DeactivatedState;
 import ru.sbt.mipt.oop.alarm.state.OnAlertState;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AlarmEventHandlerTest {
     private AlarmEventHandler alarmEventHandler;
@@ -31,7 +32,7 @@ public class AlarmEventHandlerTest {
         alarmEventHandler.handleEvent(alarmEvent);
 
         assertEquals(ActivatedState.class, alarm.getState().getClass());
-        assertEquals(code, alarm.getCode());
+        assertTrue(alarm.isCorrectCode(code));
     }
 
     @Test

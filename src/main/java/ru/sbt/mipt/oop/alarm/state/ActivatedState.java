@@ -2,8 +2,6 @@ package ru.sbt.mipt.oop.alarm.state;
 
 import ru.sbt.mipt.oop.alarm.Alarm;
 
-import java.util.Objects;
-
 public class ActivatedState implements AlarmState {
     private final Alarm alarm;
 
@@ -18,7 +16,7 @@ public class ActivatedState implements AlarmState {
 
     @Override
     public void deactivate(String code) {
-        if (Objects.equals(code, alarm.getCode())) {
+        if (alarm.isCorrectCode(code)) {
             alarm.changeState(new DeactivatedState(alarm));
         } else {
             alarm.changeState(new OnAlertState(alarm));

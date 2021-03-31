@@ -3,11 +3,9 @@ package ru.sbt.mipt.oop.events.alarm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.alarm.state.ActivatedState;
-import ru.sbt.mipt.oop.alarm.state.DeactivatedState;
-import ru.sbt.mipt.oop.alarm.state.OnAlertState;
+import ru.sbt.mipt.oop.alarm.SmsSender;
+import ru.sbt.mipt.oop.events.Event;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AlarmEventHandlerTest {
@@ -16,13 +14,19 @@ public class AlarmEventHandlerTest {
 
     @BeforeEach
     public void configureAlarm() {
-        alarm = new Alarm();
+        alarm = new Alarm(new SmsSender());
         alarmEventHandler = new AlarmEventHandler(alarm);
     }
 
     @Test
     public void defaultAlarmIsDeactivatedTest() {
-        assertEquals(DeactivatedState.class, alarm.getState().getClass());
+        assertTrue(alarm.isDeactivated());;
+    }
+
+    @Test
+    public void wrongEventTypeTest() {
+        Event event = new Event() {};
+        alarmEventHandler.handleEvent(event);
     }
 
     @Test
@@ -32,7 +36,7 @@ public class AlarmEventHandlerTest {
 
         alarmEventHandler.handleEvent(alarmEvent);
 
-        assertEquals(ActivatedState.class, alarm.getState().getClass());
+        assertTrue(alarm.isActivated());
         assertTrue(alarm.isCorrectCode(code));
     }
 
@@ -40,34 +44,34 @@ public class AlarmEventHandlerTest {
     public void deactivateAlarmTest() {
         String code = "111";
         alarm.activate(code);
-        assertEquals(ActivatedState.class, alarm.getState().getClass());
+        assertTrue(alarm.isActivated());
 
         AlarmEvent alarmEvent = new AlarmEvent(AlarmEventType.ALARM_DEACTIVATE, code);
         alarmEventHandler.handleEvent(alarmEvent);
 
-        assertEquals(DeactivatedState.class, alarm.getState().getClass());
+        assertTrue(alarm.isDeactivated());
     }
 
     @Test
     public void deactivateAlarmWrongCodeTest() {
         alarm.activate("111");
-        assertEquals(ActivatedState.class, alarm.getState().getClass());
+        assertTrue(alarm.isActivated());
 
         AlarmEvent alarmEvent = new AlarmEvent(AlarmEventType.ALARM_DEACTIVATE, "121");
         alarmEventHandler.handleEvent(alarmEvent);
 
-        assertEquals(OnAlertState.class, alarm.getState().getClass());
+        assertTrue(alarm.isOnAlert());
     }
 
     @Test
     public void deactivateAlarmOnAlert() {
         alarm.activate("111");
         alarm.setOnAlert();
-        assertEquals(OnAlertState.class, alarm.getState().getClass());
+        assertTrue(alarm.isOnAlert());
 
         AlarmEvent alarmEvent = new AlarmEvent(AlarmEventType.ALARM_DEACTIVATE, "111");
         alarmEventHandler.handleEvent(alarmEvent);
 
-        assertEquals(DeactivatedState.class, alarm.getState().getClass());
+        assertTrue(alarm.isDeactivated());
     }
 }

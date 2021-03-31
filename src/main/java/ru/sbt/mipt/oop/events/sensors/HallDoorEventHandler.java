@@ -3,11 +3,13 @@ package ru.sbt.mipt.oop.events.sensors;
 import ru.sbt.mipt.oop.actions.IsDoorInRoomAction;
 import ru.sbt.mipt.oop.actions.TurnOffLightInHomeAction;
 import ru.sbt.mipt.oop.commands.CommandSender;
+import ru.sbt.mipt.oop.events.Event;
+import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.objects.SmartHome;
 
 import static ru.sbt.mipt.oop.events.sensors.SensorEventType.DOOR_CLOSED;
 
-public class HallDoorEventHandler implements SensorEventHandler {
+public class HallDoorEventHandler implements EventHandler {
     private final CommandSender sender;
     private final SmartHome smartHome;
 
@@ -17,14 +19,16 @@ public class HallDoorEventHandler implements SensorEventHandler {
     }
 
     @Override
-    public void handleEvent(SensorEvent event) {
+    public void handleEvent(Event event) {
         // если мы получили событие о закрытие двери в холле - это значит, что была закрыта входная дверь.
         // в этом случае мы хотим автоматически выключить свет во всем доме (это же умный дом!)
-        if (event.getType() == DOOR_CLOSED) {
-            IsDoorInRoomAction action = new IsDoorInRoomAction(event.getObjectId(), "hall");
-            smartHome.execute(action);
-            if (action.payload()) {
-                smartHome.execute(new TurnOffLightInHomeAction(sender));
+        if (event instanceof SensorEvent sensorEvent) {
+            if (sensorEvent.getType() == DOOR_CLOSED) {
+                IsDoorInRoomAction action = new IsDoorInRoomAction(sensorEvent.getObjectId(), "hall");
+                smartHome.execute(action);
+                if (action.payload()) {
+                    smartHome.execute(new TurnOffLightInHomeAction(sender));
+                }
             }
         }
     }

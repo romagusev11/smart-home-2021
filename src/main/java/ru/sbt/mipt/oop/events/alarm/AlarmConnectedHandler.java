@@ -1,32 +1,30 @@
-package ru.sbt.mipt.oop.events.sensors;
+package ru.sbt.mipt.oop.events.alarm;
 
 import ru.sbt.mipt.oop.alarm.Alarm;
 import ru.sbt.mipt.oop.alarm.AlarmReactor;
-import ru.sbt.mipt.oop.io.Logger;
+import ru.sbt.mipt.oop.events.Event;
+import ru.sbt.mipt.oop.events.EventHandler;
 
-public class AlarmConnectedSensorHandler implements SensorEventHandler, AlarmReactor {
-    private final SensorEventHandler handler;
+public class AlarmConnectedHandler implements EventHandler, AlarmReactor {
+    private final EventHandler handler;
     private final Alarm alarm;
-    private final Logger logger;
-    private SensorEvent event;
+    private Event event;
 
-    public AlarmConnectedSensorHandler(Alarm alarm, SensorEventHandler handler, Logger logger) {
+    public AlarmConnectedHandler(Alarm alarm, EventHandler handler) {
         this.alarm = alarm;
         this.handler = handler;
-        this.logger = logger;
     }
 
     @Override
-    public void handleEvent(SensorEvent event) {
+    public void handleEvent(Event event) {
         this.event = event;
         alarm.react(this);
     }
 
-
     @Override
     public void onAlarmActivatedState() {
         alarm.setOnAlert();
-        logger.log("Sending sms... Alarm: " + event.toString());
+        alarm.sendMessage(event.toString());
     }
 
     @Override

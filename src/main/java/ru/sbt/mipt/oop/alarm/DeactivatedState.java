@@ -1,7 +1,4 @@
-package ru.sbt.mipt.oop.alarm.state;
-
-import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.alarm.AlarmReactor;
+package ru.sbt.mipt.oop.alarm;
 
 public class DeactivatedState implements AlarmState {
     private final Alarm alarm;

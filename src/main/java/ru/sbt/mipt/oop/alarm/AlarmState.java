@@ -1,6 +1,4 @@
-package ru.sbt.mipt.oop.alarm.state;
-
-import ru.sbt.mipt.oop.alarm.AlarmReactor;
+package ru.sbt.mipt.oop.alarm;
 
 public interface AlarmState {
     void activate(String code);

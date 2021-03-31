@@ -8,7 +8,6 @@ import ru.sbt.mipt.oop.actions.IsDoorInRoomAction;
 import ru.sbt.mipt.oop.commands.CommandSender;
 import ru.sbt.mipt.oop.events.sensors.HallDoorEventHandler;
 import ru.sbt.mipt.oop.events.sensors.SensorEvent;
-import ru.sbt.mipt.oop.events.sensors.SensorEventHandler;
 import ru.sbt.mipt.oop.events.sensors.SensorEventType;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HallDoorEventHandlerTest {
-    private SensorEventHandler hallDoorSensorEventHandler;
+    private EventHandler hallDoorSensorEventHandler;
     private SmartHome smartHome;
 
     @BeforeEach

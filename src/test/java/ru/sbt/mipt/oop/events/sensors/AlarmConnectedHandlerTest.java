@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.actions.FindDoorByIdAction;
 import ru.sbt.mipt.oop.actions.FindLightByIdAction;
 import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.alarm.state.OnAlertState;
+import ru.sbt.mipt.oop.alarm.SmsSender;
+import ru.sbt.mipt.oop.events.EventHandler;
+import ru.sbt.mipt.oop.events.alarm.AlarmConnectedHandler;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
@@ -13,11 +15,12 @@ import ru.sbt.mipt.oop.objects.Door;
 import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.objects.SmartHome;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class AlarmConnectedSensorHandlerTest {
-    private SensorEventHandler doorSensorEventHandler;
-    private SensorEventHandler lightSensorEventHandler;
+public class AlarmConnectedHandlerTest {
+    private EventHandler doorSensorEventHandler;
+    private EventHandler lightSensorEventHandler;
     private SmartHome smartHome;
     private Alarm alarm;
 
@@ -26,13 +29,13 @@ public class AlarmConnectedSensorHandlerTest {
         String filename = "src/test/resources/smartHomeTesting.js";
         SmartHomeReader reader = new FileSmartHomeReader(filename);
         smartHome = reader.readSmartHome();
-        alarm = new Alarm();
+        alarm = new Alarm(new SmsSender());
 
         Logger logger = str -> {};
-        lightSensorEventHandler = new AlarmConnectedSensorHandler(alarm,
-                new LightEventHandler(smartHome, logger), logger);
-        doorSensorEventHandler = new AlarmConnectedSensorHandler(alarm,
-                new DoorEventHandler(smartHome, logger), logger);
+        lightSensorEventHandler = new AlarmConnectedHandler(alarm,
+                new LightEventHandler(smartHome, logger));
+        doorSensorEventHandler = new AlarmConnectedHandler(alarm,
+                new DoorEventHandler(smartHome, logger));
     }
 
     @Test
@@ -80,7 +83,7 @@ public class AlarmConnectedSensorHandlerTest {
         doorSensorEventHandler.handleEvent(event);
 
         assertFalse(door.isOpen());
-        assertEquals(OnAlertState.class, alarm.getState().getClass());
+        assertTrue(alarm.isOnAlert());
     }
 
     @Test
@@ -98,6 +101,6 @@ public class AlarmConnectedSensorHandlerTest {
         lightSensorEventHandler.handleEvent(event);
 
         assertFalse(light.isOn());
-        assertEquals(OnAlertState.class, alarm.getState().getClass());
+        assertTrue(alarm.isOnAlert());
     }
 }

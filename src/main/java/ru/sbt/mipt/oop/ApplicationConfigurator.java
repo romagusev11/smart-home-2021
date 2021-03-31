@@ -1,14 +1,15 @@
 package ru.sbt.mipt.oop;
 
 import ru.sbt.mipt.oop.alarm.Alarm;
+import ru.sbt.mipt.oop.alarm.SmsSender;
 import ru.sbt.mipt.oop.commands.CommandSender;
 import ru.sbt.mipt.oop.commands.ConsoleCommandSender;
-import ru.sbt.mipt.oop.events.EventGenerator;
-import ru.sbt.mipt.oop.events.EventLoop;
-import ru.sbt.mipt.oop.events.EventLoopImpl;
-import ru.sbt.mipt.oop.events.RandomEventGenerator;
+import ru.sbt.mipt.oop.events.*;
+import ru.sbt.mipt.oop.events.alarm.AlarmConnectedHandler;
 import ru.sbt.mipt.oop.events.alarm.AlarmEventHandler;
-import ru.sbt.mipt.oop.events.sensors.*;
+import ru.sbt.mipt.oop.events.sensors.DoorEventHandler;
+import ru.sbt.mipt.oop.events.sensors.HallDoorEventHandler;
+import ru.sbt.mipt.oop.events.sensors.LightEventHandler;
 import ru.sbt.mipt.oop.io.ConsoleLogger;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.Logger;
@@ -27,23 +28,24 @@ public class ApplicationConfigurator {
         EventGenerator generator = new RandomEventGenerator();
         CommandSender sender = new ConsoleCommandSender();
         Logger logger = new ConsoleLogger();
-        List<SensorEventHandler> sensorHandlers = new ArrayList<>();
-        Alarm alarm = new Alarm();
+        List<EventHandler> eventHandlers = new ArrayList<>();
+        Alarm alarm = new Alarm(new SmsSender());
         AlarmEventHandler alarmHandler = new AlarmEventHandler(alarm);
 
-        EventLoop eventLoop = new EventLoopImpl(logger, generator, sensorHandlers, alarmHandler);
+        EventLoop eventLoop = new EventLoopImpl(logger, generator, eventHandlers);
         Application application = new Application(eventLoop);
 
-        SensorEventHandler lightEventHandler =
-                new AlarmConnectedSensorHandler(alarm, new LightEventHandler(smartHome, logger), logger);
-        SensorEventHandler doorEventHandler =
-                new AlarmConnectedSensorHandler(alarm, new DoorEventHandler(smartHome, logger), logger);
-        SensorEventHandler hallDoorEventHandler =
-                new AlarmConnectedSensorHandler(alarm, new HallDoorEventHandler(smartHome, sender), logger);
+        EventHandler lightEventHandler =
+                new AlarmConnectedHandler(alarm, new LightEventHandler(smartHome, logger));
+        EventHandler doorEventHandler =
+                new AlarmConnectedHandler(alarm, new DoorEventHandler(smartHome, logger));
+        EventHandler hallDoorEventHandler =
+                new AlarmConnectedHandler(alarm, new HallDoorEventHandler(smartHome, sender));
 
-        sensorHandlers.add(lightEventHandler);
-        sensorHandlers.add(doorEventHandler);
-        sensorHandlers.add(hallDoorEventHandler);
+        eventHandlers.add(lightEventHandler);
+        eventHandlers.add(doorEventHandler);
+        eventHandlers.add(hallDoorEventHandler);
+        eventHandlers.add(alarmHandler);
 
         application.run();
     }

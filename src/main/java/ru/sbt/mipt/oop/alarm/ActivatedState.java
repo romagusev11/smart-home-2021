@@ -1,12 +1,9 @@
-package ru.sbt.mipt.oop.alarm.state;
+package ru.sbt.mipt.oop.alarm;
 
-import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.alarm.AlarmReactor;
-
-public class OnAlertState implements AlarmState {
+public class ActivatedState implements AlarmState {
     private final Alarm alarm;
 
-    public OnAlertState(Alarm alarm) {
+    public ActivatedState(Alarm alarm) {
         this.alarm = alarm;
     }
 
@@ -19,16 +16,18 @@ public class OnAlertState implements AlarmState {
     public void deactivate(String code) {
         if (alarm.isCorrectCode(code)) {
             alarm.changeState(new DeactivatedState(alarm));
+        } else {
+            alarm.changeState(new OnAlertState(alarm));
         }
     }
 
     @Override
     public void setOnAlert() {
-        // Do nothing
+        alarm.changeState(new OnAlertState(alarm));
     }
 
     @Override
     public void react(AlarmReactor reactor) {
-        reactor.onAlarmOnAlertState();
+        reactor.onAlarmActivatedState();
     }
 }

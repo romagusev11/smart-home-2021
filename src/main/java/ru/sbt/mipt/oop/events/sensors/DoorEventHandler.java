@@ -2,13 +2,15 @@ package ru.sbt.mipt.oop.events.sensors;
 
 import ru.sbt.mipt.oop.actions.CloseDoorAction;
 import ru.sbt.mipt.oop.actions.OpenDoorAction;
+import ru.sbt.mipt.oop.events.Event;
+import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.objects.SmartHome;
 
 import static ru.sbt.mipt.oop.events.sensors.SensorEventType.DOOR_CLOSED;
 import static ru.sbt.mipt.oop.events.sensors.SensorEventType.DOOR_OPEN;
 
-public class DoorEventHandler implements SensorEventHandler {
+public class DoorEventHandler implements EventHandler {
     private final Logger logger;
     private final SmartHome smartHome;
 
@@ -18,13 +20,15 @@ public class DoorEventHandler implements SensorEventHandler {
     }
 
     @Override
-    public void handleEvent(SensorEvent event) {
-        if (event.getType() == DOOR_OPEN) {
-            openDoor(event.getObjectId());
-        }
+    public void handleEvent(Event event) {
+        if (event instanceof SensorEvent sensorEvent) {
+            if (sensorEvent.getType() == DOOR_OPEN) {
+                openDoor(sensorEvent.getObjectId());
+            }
 
-        if (event.getType() == DOOR_CLOSED) {
-            closeDoor(event.getObjectId());
+            if (sensorEvent.getType() == DOOR_CLOSED) {
+                closeDoor(sensorEvent.getObjectId());
+            }
         }
     }
 

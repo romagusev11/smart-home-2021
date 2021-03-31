@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.actions.FindLightByIdAction;
 import ru.sbt.mipt.oop.events.sensors.LightEventHandler;
 import ru.sbt.mipt.oop.events.sensors.SensorEvent;
-import ru.sbt.mipt.oop.events.sensors.SensorEventHandler;
 import ru.sbt.mipt.oop.events.sensors.SensorEventType;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.Logger;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LightEventHandlerTest {
-    private SensorEventHandler lightSensorEventHandler;
+    private EventHandler lightSensorEventHandler;
     private SmartHome smartHome;
 
     @BeforeEach

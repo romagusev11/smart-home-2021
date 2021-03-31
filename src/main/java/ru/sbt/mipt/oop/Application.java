@@ -1,16 +1,13 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.events.EventLoop;
+import com.coolcompany.smarthome.events.SensorEventsManager;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
-    private final EventLoop eventLoop;
-
-    public Application(EventLoop eventLoop) {
-        this.eventLoop = eventLoop;
-    }
-
-    public void run() {
-        // начинаем цикл обработки событий
-        eventLoop.handleEvents();
+    public static void main(String... args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
+        SensorEventsManager sensorEventsManager = context.getBean(SensorEventsManager.class);
+        sensorEventsManager.start();
     }
 }

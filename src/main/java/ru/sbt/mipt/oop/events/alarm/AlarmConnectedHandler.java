@@ -23,6 +23,10 @@ public class AlarmConnectedHandler implements EventHandler, AlarmReactor {
 
     @Override
     public void onAlarmActivatedState() {
+        if (event instanceof AlarmEvent) {
+            return;
+        }
+
         alarm.setOnAlert();
         alarm.sendMessage(event.toString());
     }

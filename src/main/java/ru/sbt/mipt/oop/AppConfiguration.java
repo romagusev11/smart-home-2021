@@ -1,5 +1,6 @@
 package ru.sbt.mipt.oop;
 
+import com.coolcompany.smarthome.events.EventHandler;
 import com.coolcompany.smarthome.events.SensorEventsManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,6 @@ import ru.sbt.mipt.oop.ccs.CCSEventToEventConverter;
 import ru.sbt.mipt.oop.ccs.CSSConverterConfiguration;
 import ru.sbt.mipt.oop.commands.CommandSender;
 import ru.sbt.mipt.oop.commands.ConsoleCommandSender;
-import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.events.alarm.AlarmConnectedHandler;
 import ru.sbt.mipt.oop.events.alarm.AlarmEventHandler;
 import ru.sbt.mipt.oop.events.sensors.DoorEventHandler;
@@ -24,6 +24,8 @@ import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.SmartHome;
 
+import java.util.Collection;
+
 @Configuration
 @Import(CSSConverterConfiguration.class)
 public class AppConfiguration {
@@ -32,31 +34,55 @@ public class AppConfiguration {
     CCSEventToEventConverter defaultConverter;
 
     @Bean
-    SensorEventsManager sensorEventsManager() {
-        // считываем состояние дома из файла
+    Alarm alarm() {
+        return new Alarm(new SmsSender());
+    }
+
+    @Bean
+    SmartHome smartHome() {
         SmartHomeReader reader = new FileSmartHomeReader("smart-home-1.js");
-        SmartHome smartHome = reader.readSmartHome();
-        CommandSender sender = new ConsoleCommandSender();
-        Logger logger = new ConsoleLogger();
+        return reader.readSmartHome();
+    }
 
-        Alarm alarm = new Alarm(new SmsSender());
-        AlarmEventHandler alarmHandler = new AlarmEventHandler(alarm);
+    @Bean
+    CommandSender commandSender() {
+        return new ConsoleCommandSender();
+    }
 
-        EventHandler lightEventHandler =
-                new AlarmConnectedHandler(alarm, new LightEventHandler(smartHome, logger));
-        EventHandler doorEventHandler =
-                new AlarmConnectedHandler(alarm, new DoorEventHandler(smartHome, logger));
-        EventHandler hallDoorEventHandler =
-                new AlarmConnectedHandler(alarm, new HallDoorEventHandler(smartHome, sender));
+    @Bean
+    Logger logger() {
+        return new ConsoleLogger();
+    }
 
+    @Bean
+    EventHandler lightEventHandler(Alarm alarm, SmartHome smartHome, Logger logger) {
+        return new CCSAdapter(new AlarmConnectedHandler(alarm,
+                new LightEventHandler(smartHome, logger)), defaultConverter);
+    }
+
+    @Bean
+    EventHandler doorEventHandler(Alarm alarm, SmartHome smartHome, Logger logger) {
+        return new CCSAdapter(new AlarmConnectedHandler(alarm,
+                new DoorEventHandler(smartHome, logger)), defaultConverter);
+    }
+
+    @Bean
+    EventHandler hallDoorEventHandler(Alarm alarm, SmartHome smartHome, CommandSender sender) {
+        return new CCSAdapter(new AlarmConnectedHandler(alarm,
+                new HallDoorEventHandler(smartHome, sender)), defaultConverter);
+    }
+
+    @Bean
+    AlarmEventHandler alarmHandler(Alarm alarm) {
+       return new AlarmEventHandler(alarm);
+    }
+
+    @Bean
+    SensorEventsManager sensorEventsManager(Collection<EventHandler> eventHandlers) {
         SensorEventsManager sensorEventsManager = new SensorEventsManager();
-
-        CCSEventToEventConverter eventConverter = defaultConverter;
-
-        sensorEventsManager.registerEventHandler(new CCSAdapter(alarmHandler, eventConverter));
-        sensorEventsManager.registerEventHandler(new CCSAdapter(lightEventHandler, eventConverter));
-        sensorEventsManager.registerEventHandler(new CCSAdapter(doorEventHandler, eventConverter));
-        sensorEventsManager.registerEventHandler(new CCSAdapter(hallDoorEventHandler, eventConverter));
+        for (var handler : eventHandlers) {
+            sensorEventsManager.registerEventHandler(handler);
+        }
         return sensorEventsManager;
     }
 }

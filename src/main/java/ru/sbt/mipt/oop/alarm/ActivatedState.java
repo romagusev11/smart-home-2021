@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop.alarm;
 
-public class ActivatedState implements AlarmState {
+class ActivatedState implements AlarmState {
     private final Alarm alarm;
 
     public ActivatedState(Alarm alarm) {

@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop.alarm;
 
-public class OnAlertState implements AlarmState {
+class OnAlertState implements AlarmState {
     private final Alarm alarm;
 
     public OnAlertState(Alarm alarm) {

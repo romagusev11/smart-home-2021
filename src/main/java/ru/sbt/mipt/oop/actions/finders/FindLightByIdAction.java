@@ -1,8 +1,10 @@
-package ru.sbt.mipt.oop.actions;
+package ru.sbt.mipt.oop.actions.finders;
 
+import ru.sbt.mipt.oop.actions.Action;
+import ru.sbt.mipt.oop.actions.Actionable;
 import ru.sbt.mipt.oop.objects.Light;
 
-public class FindLightByIdAction implements Action{
+public class FindLightByIdAction implements Action {
     private final String lightId;
     private Light result = null;
 
@@ -12,8 +14,7 @@ public class FindLightByIdAction implements Action{
 
     @Override
     public void execute(Actionable object) {
-        if (object instanceof Light) {
-            Light light = (Light) object;
+        if (object instanceof Light light) {
             if (light.getId().equals(lightId)) {
                 result = light;
             }

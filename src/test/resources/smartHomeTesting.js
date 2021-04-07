@@ -75,7 +75,7 @@
       "doors": [
         {
           "id": "4",
-          "isOpen": false
+          "isOpen": true
         }
       ],
       "name": "hall"

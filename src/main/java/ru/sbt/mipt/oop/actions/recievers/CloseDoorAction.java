@@ -1,5 +1,7 @@
-package ru.sbt.mipt.oop.actions;
+package ru.sbt.mipt.oop.actions.recievers;
 
+import ru.sbt.mipt.oop.actions.Action;
+import ru.sbt.mipt.oop.actions.Actionable;
 import ru.sbt.mipt.oop.objects.Door;
 
 public class CloseDoorAction implements Action {
@@ -12,8 +14,7 @@ public class CloseDoorAction implements Action {
 
     @Override
     public void execute(Actionable object) {
-        if (object instanceof Door) {
-            Door door = (Door) object;
+        if (object instanceof Door door) {
             if (door.getId().equals(doorId)) {
                 door.setOpen(false);
                 result = true;

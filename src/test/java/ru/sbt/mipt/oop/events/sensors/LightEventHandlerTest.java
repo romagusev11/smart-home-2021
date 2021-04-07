@@ -2,7 +2,7 @@ package ru.sbt.mipt.oop.events.sensors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.sbt.mipt.oop.actions.FindLightByIdAction;
+import ru.sbt.mipt.oop.actions.finders.FindLightByIdAction;
 import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.Logger;

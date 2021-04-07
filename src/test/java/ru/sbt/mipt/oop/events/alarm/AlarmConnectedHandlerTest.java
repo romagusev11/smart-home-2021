@@ -2,8 +2,8 @@ package ru.sbt.mipt.oop.events.alarm;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.sbt.mipt.oop.actions.FindDoorByIdAction;
-import ru.sbt.mipt.oop.actions.FindLightByIdAction;
+import ru.sbt.mipt.oop.actions.finders.FindDoorByIdAction;
+import ru.sbt.mipt.oop.actions.finders.FindLightByIdAction;
 import ru.sbt.mipt.oop.alarm.Alarm;
 import ru.sbt.mipt.oop.alarm.AlertMessageSender;
 import ru.sbt.mipt.oop.events.EventHandler;

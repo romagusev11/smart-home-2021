@@ -1,5 +1,5 @@
 package ru.sbt.mipt.oop.alarm;
 
-public interface MessageSender {
+public interface AlertMessageSender {
     void sendMessage(String message);
 }

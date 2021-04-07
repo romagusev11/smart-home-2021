@@ -16,6 +16,6 @@ public class CSSConverterConfiguration {
         eventConverter.addConverter("DoorIsClosed", new SensorEventFactory(SensorEventType.DOOR_CLOSED));
         eventConverter.addConverter("DoorIsLocked", new AlarmEventFactory(AlarmEventType.ALARM_ACTIVATE, "111"));
         eventConverter.addConverter("DoorIsUnlocked", new AlarmEventFactory(AlarmEventType.ALARM_DEACTIVATE, "111"));
-        return  eventConverter;
+        return eventConverter;
     }
 }

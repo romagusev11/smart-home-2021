@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ru.sbt.mipt.oop.alarm.Alarm;
+import ru.sbt.mipt.oop.alarm.AlertMessageSender;
 import ru.sbt.mipt.oop.alarm.SmsSender;
 import ru.sbt.mipt.oop.ccs.CCSAdapter;
 import ru.sbt.mipt.oop.ccs.CCSEventToEventConverter;
@@ -35,7 +36,12 @@ public class AppConfiguration {
 
     @Bean
     Alarm alarm() {
-        return new Alarm(new SmsSender());
+        return new Alarm();
+    }
+
+    @Bean
+    AlertMessageSender alertMessageSender() {
+        return new SmsSender();
     }
 
     @Bean
@@ -55,26 +61,29 @@ public class AppConfiguration {
     }
 
     @Bean
-    EventHandler lightEventHandler(Alarm alarm, SmartHome smartHome, Logger logger) {
+    EventHandler lightEventHandler(Alarm alarm, SmartHome smartHome, Logger logger,
+                                   AlertMessageSender alertMessageSender) {
         return new CCSAdapter(new AlarmConnectedHandler(alarm,
-                new LightEventHandler(smartHome, logger)), defaultConverter);
+                new LightEventHandler(smartHome, logger), alertMessageSender), defaultConverter);
     }
 
     @Bean
-    EventHandler doorEventHandler(Alarm alarm, SmartHome smartHome, Logger logger) {
+    EventHandler doorEventHandler(Alarm alarm, SmartHome smartHome, Logger logger,
+                                  AlertMessageSender alertMessageSender) {
         return new CCSAdapter(new AlarmConnectedHandler(alarm,
-                new DoorEventHandler(smartHome, logger)), defaultConverter);
+                new DoorEventHandler(smartHome, logger), alertMessageSender), defaultConverter);
     }
 
     @Bean
-    EventHandler hallDoorEventHandler(Alarm alarm, SmartHome smartHome, CommandSender sender) {
+    EventHandler hallDoorEventHandler(Alarm alarm, SmartHome smartHome, CommandSender sender,
+                                      AlertMessageSender alertMessageSender) {
         return new CCSAdapter(new AlarmConnectedHandler(alarm,
-                new HallDoorEventHandler(smartHome, sender)), defaultConverter);
+                new HallDoorEventHandler(smartHome, sender), alertMessageSender), defaultConverter);
     }
 
     @Bean
-    AlarmEventHandler alarmHandler(Alarm alarm) {
-       return new AlarmEventHandler(alarm);
+    EventHandler alarmHandler(Alarm alarm) {
+        return new CCSAdapter(new AlarmEventHandler(alarm), defaultConverter);
     }
 
     @Bean

@@ -5,11 +5,9 @@ import java.util.Objects;
 public class Alarm {
     private AlarmState state;
     private String code;
-    private final MessageSender sender;
 
-    public Alarm(MessageSender sender) {
+    public Alarm() {
         this.state = new DeactivatedState(this);
-        this.sender = sender;
     }
 
     public void activate(String code) {
@@ -28,7 +26,7 @@ public class Alarm {
         this.state = state;
     }
 
-    public boolean isCorrectCode(String code) {
+    boolean isCorrectCode(String code) {
         return Objects.equals(code, this.code);
     }
 
@@ -38,10 +36,6 @@ public class Alarm {
 
     public void react(AlarmReactor reactor) {
         state.react(reactor);
-    }
-
-    public void sendMessage(String message) {
-        sender.sendMessage(message);
     }
 
     public boolean isActivated() {

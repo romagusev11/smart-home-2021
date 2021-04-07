@@ -3,7 +3,6 @@ package ru.sbt.mipt.oop.events.alarm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.alarm.SmsSender;
 import ru.sbt.mipt.oop.events.Event;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,7 +13,7 @@ public class AlarmEventHandlerTest {
 
     @BeforeEach
     public void configureAlarm() {
-        alarm = new Alarm(new SmsSender());
+        alarm = new Alarm();
         alarmEventHandler = new AlarmEventHandler(alarm);
     }
 
@@ -37,7 +36,6 @@ public class AlarmEventHandlerTest {
         alarmEventHandler.handleEvent(alarmEvent);
 
         assertTrue(alarm.isActivated());
-        assertTrue(alarm.isCorrectCode(code));
     }
 
     @Test

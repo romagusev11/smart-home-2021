@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.actions.FindDoorByIdAction;
 import ru.sbt.mipt.oop.actions.FindLightByIdAction;
 import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.alarm.SmsSender;
+import ru.sbt.mipt.oop.alarm.AlertMessageSender;
 import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.events.alarm.AlarmConnectedHandler;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
@@ -29,13 +29,14 @@ public class AlarmConnectedHandlerTest {
         String filename = "src/test/resources/smartHomeTesting.js";
         SmartHomeReader reader = new FileSmartHomeReader(filename);
         smartHome = reader.readSmartHome();
-        alarm = new Alarm(new SmsSender());
+        alarm = new Alarm();
 
+        AlertMessageSender sender = str -> {};
         Logger logger = str -> {};
         lightSensorEventHandler = new AlarmConnectedHandler(alarm,
-                new LightEventHandler(smartHome, logger));
+                new LightEventHandler(smartHome, logger), sender);
         doorSensorEventHandler = new AlarmConnectedHandler(alarm,
-                new DoorEventHandler(smartHome, logger));
+                new DoorEventHandler(smartHome, logger), sender);
     }
 
     @Test

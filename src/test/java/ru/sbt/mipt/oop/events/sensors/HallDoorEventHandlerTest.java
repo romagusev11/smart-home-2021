@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.events;
+package ru.sbt.mipt.oop.events.sensors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,9 +6,7 @@ import ru.sbt.mipt.oop.actions.Action;
 import ru.sbt.mipt.oop.actions.FindLightByIdAction;
 import ru.sbt.mipt.oop.actions.IsDoorInRoomAction;
 import ru.sbt.mipt.oop.commands.CommandSender;
-import ru.sbt.mipt.oop.events.sensors.HallDoorEventHandler;
-import ru.sbt.mipt.oop.events.sensors.SensorEvent;
-import ru.sbt.mipt.oop.events.sensors.SensorEventType;
+import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.Light;

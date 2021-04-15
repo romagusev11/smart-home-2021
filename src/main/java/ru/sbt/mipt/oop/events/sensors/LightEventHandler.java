@@ -1,12 +1,14 @@
-package ru.sbt.mipt.oop.events;
+package ru.sbt.mipt.oop.events.sensors;
 
 import ru.sbt.mipt.oop.actions.TurnLightOffAction;
 import ru.sbt.mipt.oop.actions.TurnLightOnAction;
+import ru.sbt.mipt.oop.events.Event;
+import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.objects.SmartHome;
 
-import static ru.sbt.mipt.oop.events.SensorEventType.LIGHT_OFF;
-import static ru.sbt.mipt.oop.events.SensorEventType.LIGHT_ON;
+import static ru.sbt.mipt.oop.events.sensors.SensorEventType.LIGHT_OFF;
+import static ru.sbt.mipt.oop.events.sensors.SensorEventType.LIGHT_ON;
 
 public class LightEventHandler implements EventHandler {
     private final Logger logger;
@@ -18,12 +20,14 @@ public class LightEventHandler implements EventHandler {
     }
 
     @Override
-    public void handleEvent(SensorEvent event) {
-        if (event.getType() == LIGHT_ON) {
-            turnLightOn(event.getObjectId());
-        }
-        if (event.getType() == LIGHT_OFF) {
-            turnLightOff(event.getObjectId());
+    public void handleEvent(Event event) {
+        if (event instanceof SensorEvent sensorEvent) {
+            if (sensorEvent.getType() == LIGHT_ON) {
+                turnLightOn(sensorEvent.getObjectId());
+            }
+            if (sensorEvent.getType() == LIGHT_OFF) {
+                turnLightOff(sensorEvent.getObjectId());
+            }
         }
     }
 

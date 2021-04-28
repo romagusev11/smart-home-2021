@@ -2,10 +2,10 @@ package ru.sbt.mipt.oop.actions.senders;
 
 import ru.sbt.mipt.oop.actions.Action;
 import ru.sbt.mipt.oop.actions.Actionable;
-import ru.sbt.mipt.oop.commands.CommandSender;
-import ru.sbt.mipt.oop.commands.CommandType;
-import ru.sbt.mipt.oop.commands.SensorCommand;
 import ru.sbt.mipt.oop.objects.Light;
+import ru.sbt.mipt.oop.sensor_commands.CommandSender;
+import ru.sbt.mipt.oop.sensor_commands.CommandType;
+import ru.sbt.mipt.oop.sensor_commands.SensorCommand;
 
 public class TurnOffLightInHomeAction implements Action {
     private final CommandSender sender;

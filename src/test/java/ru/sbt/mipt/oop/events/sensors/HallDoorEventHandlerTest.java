@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.actions.Action;
 import ru.sbt.mipt.oop.actions.finders.FindLightByIdAction;
 import ru.sbt.mipt.oop.actions.finders.IsDoorInRoomAction;
-import ru.sbt.mipt.oop.commands.CommandSender;
 import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.objects.SmartHome;
+import ru.sbt.mipt.oop.sensor_commands.CommandSender;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

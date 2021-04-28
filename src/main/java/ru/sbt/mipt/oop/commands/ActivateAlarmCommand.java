@@ -1,8 +1,8 @@
-package ru.sbt.mipt.oop.remotecontrol;
+package ru.sbt.mipt.oop.commands;
 
 import ru.sbt.mipt.oop.alarm.Alarm;
 
-public class ActivateAlarmCommand implements RemoteControlCommand {
+public class ActivateAlarmCommand implements Command {
     private final Alarm alarm;
     private final String code;
 

@@ -1,13 +1,13 @@
-package ru.sbt.mipt.oop.remotecontrol;
+package ru.sbt.mipt.oop.commands;
 
 import ru.sbt.mipt.oop.actions.finders.GetRoomDoorsAction;
 import ru.sbt.mipt.oop.actions.senders.CloseDoorAction;
-import ru.sbt.mipt.oop.commands.CommandSender;
 import ru.sbt.mipt.oop.objects.SmartHome;
+import ru.sbt.mipt.oop.sensor_commands.CommandSender;
 
 import java.util.List;
 
-public class CloseFrontDoorCommand implements RemoteControlCommand {
+public class CloseFrontDoorCommand implements Command {
     private final SmartHome smartHome;
     private final CommandSender sender;
 

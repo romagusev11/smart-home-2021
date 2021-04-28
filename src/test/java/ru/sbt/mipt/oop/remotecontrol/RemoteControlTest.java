@@ -9,12 +9,13 @@ import ru.sbt.mipt.oop.actions.finders.FindLightByIdAction;
 import ru.sbt.mipt.oop.actions.finders.IsDoorInRoomAction;
 import ru.sbt.mipt.oop.actions.finders.IsLightInRoomAction;
 import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.commands.CommandSender;
+import ru.sbt.mipt.oop.commands.*;
 import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.Door;
 import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.objects.SmartHome;
+import ru.sbt.mipt.oop.sensor_commands.CommandSender;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,14 +34,15 @@ public class RemoteControlTest {
         smartHome = reader.readSmartHome();
         alarm = new Alarm();
         CommandSender sender = str -> {};
-        remoteControl = new RemoteControlImpl()
+        remoteControl = new RemoteControlImplBuilder()
                 .addCommand("A", new ActivateAlarmCommand(alarm, code))
                 .addCommand("B", new SetAlarmOnAlertCommand(alarm))
                 .addCommand("C", new CloseFrontDoorCommand(smartHome, sender))
                 .addCommand("D", new CloseFrontDoorCommand(smartHome, sender))
                 .addCommand("1", new TurnLightInRoomOnCommand(smartHome, sender, "hall"))
                 .addCommand("2", new TurnLightOffCommand(smartHome, sender))
-                .addCommand("3", new TurnLightOnCommand(smartHome, sender));
+                .addCommand("3", new TurnLightOnCommand(smartHome, sender))
+                .getResult();
     }
 
     @Test

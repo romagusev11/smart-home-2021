@@ -3,6 +3,7 @@ package ru.sbt.mipt.oop;
 import com.coolcompany.smarthome.events.EventHandler;
 import com.coolcompany.smarthome.events.SensorEventsManager;
 import en.supercompany.remotecontrol.RemoteControl;
+import en.supercompany.remotecontrol.RemoteControlRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -109,5 +110,16 @@ public class AppConfiguration {
                 .addCommand("2", new TurnLightOffCommand(smartHome, sender))
                 .addCommand("3", new TurnLightOnCommand(smartHome, sender))
                 .getResult();
+    }
+
+    @Bean
+    RemoteControlRegistry remoteControlRegistry(Collection<RemoteControl> remoteControls) {
+        RemoteControlRegistry remoteControlRegistry = new RemoteControlRegistry();
+        int id = 0;
+        for (var rc : remoteControls) {
+            remoteControlRegistry.registerRemoteControl(rc, "" + id);
+            ++id;
+        }
+        return  remoteControlRegistry;
     }
 }

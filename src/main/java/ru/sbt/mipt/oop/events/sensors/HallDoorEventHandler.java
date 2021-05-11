@@ -1,11 +1,11 @@
 package ru.sbt.mipt.oop.events.sensors;
 
-import ru.sbt.mipt.oop.actions.IsDoorInRoomAction;
-import ru.sbt.mipt.oop.actions.TurnOffLightInHomeAction;
-import ru.sbt.mipt.oop.commands.CommandSender;
+import ru.sbt.mipt.oop.actions.finders.IsDoorInRoomAction;
+import ru.sbt.mipt.oop.actions.senders.TurnOffLightInHomeAction;
 import ru.sbt.mipt.oop.events.Event;
 import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.objects.SmartHome;
+import ru.sbt.mipt.oop.sensor_commands.CommandSender;
 
 import static ru.sbt.mipt.oop.events.sensors.SensorEventType.DOOR_CLOSED;
 

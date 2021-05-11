@@ -1,5 +1,7 @@
-package ru.sbt.mipt.oop.actions;
+package ru.sbt.mipt.oop.actions.finders;
 
+import ru.sbt.mipt.oop.actions.Action;
+import ru.sbt.mipt.oop.actions.Actionable;
 import ru.sbt.mipt.oop.objects.Door;
 import ru.sbt.mipt.oop.objects.Room;
 
@@ -19,8 +21,8 @@ public class IsDoorInRoomAction implements Action {
         if (object instanceof Room) {
             currentRoom = ((Room) object).getName();
         }
-        if (object instanceof Door) {
-            if (((Door) object).getId().equals(doorId) && currentRoom.equals(roomName)) {
+        if (object instanceof Door door) {
+            if (door.getId().equals(doorId) && currentRoom.equals(roomName)) {
                 result = true;
             }
         }

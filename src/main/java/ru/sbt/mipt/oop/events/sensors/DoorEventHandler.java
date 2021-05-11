@@ -1,7 +1,7 @@
 package ru.sbt.mipt.oop.events.sensors;
 
-import ru.sbt.mipt.oop.actions.CloseDoorAction;
-import ru.sbt.mipt.oop.actions.OpenDoorAction;
+import ru.sbt.mipt.oop.actions.recievers.CloseDoorAction;
+import ru.sbt.mipt.oop.actions.recievers.OpenDoorAction;
 import ru.sbt.mipt.oop.events.Event;
 import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.io.Logger;

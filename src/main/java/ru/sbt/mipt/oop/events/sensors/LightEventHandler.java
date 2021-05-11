@@ -1,7 +1,7 @@
 package ru.sbt.mipt.oop.events.sensors;
 
-import ru.sbt.mipt.oop.actions.TurnLightOffAction;
-import ru.sbt.mipt.oop.actions.TurnLightOnAction;
+import ru.sbt.mipt.oop.actions.recievers.TurnLightOffAction;
+import ru.sbt.mipt.oop.actions.recievers.TurnLightOnAction;
 import ru.sbt.mipt.oop.events.Event;
 import ru.sbt.mipt.oop.events.EventHandler;
 import ru.sbt.mipt.oop.io.Logger;

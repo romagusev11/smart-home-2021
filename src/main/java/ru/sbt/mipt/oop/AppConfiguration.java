@@ -2,6 +2,8 @@ package ru.sbt.mipt.oop;
 
 import com.coolcompany.smarthome.events.EventHandler;
 import com.coolcompany.smarthome.events.SensorEventsManager;
+import en.supercompany.remotecontrol.RemoteControl;
+import en.supercompany.remotecontrol.RemoteControlRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +14,7 @@ import ru.sbt.mipt.oop.alarm.SmsSender;
 import ru.sbt.mipt.oop.ccs.CCSAdapter;
 import ru.sbt.mipt.oop.ccs.CCSEventToEventConverter;
 import ru.sbt.mipt.oop.ccs.CSSConverterConfiguration;
-import ru.sbt.mipt.oop.commands.CommandSender;
-import ru.sbt.mipt.oop.commands.ConsoleCommandSender;
+import ru.sbt.mipt.oop.commands.*;
 import ru.sbt.mipt.oop.events.alarm.AlarmConnectedHandler;
 import ru.sbt.mipt.oop.events.alarm.AlarmEventHandler;
 import ru.sbt.mipt.oop.events.sensors.DoorEventHandler;
@@ -24,6 +25,9 @@ import ru.sbt.mipt.oop.io.FileSmartHomeReader;
 import ru.sbt.mipt.oop.io.Logger;
 import ru.sbt.mipt.oop.io.SmartHomeReader;
 import ru.sbt.mipt.oop.objects.SmartHome;
+import ru.sbt.mipt.oop.remotecontrol.RemoteControlImplBuilder;
+import ru.sbt.mipt.oop.sensor_commands.CommandSender;
+import ru.sbt.mipt.oop.sensor_commands.ConsoleCommandSender;
 
 import java.util.Collection;
 
@@ -93,5 +97,29 @@ public class AppConfiguration {
             sensorEventsManager.registerEventHandler(handler);
         }
         return sensorEventsManager;
+    }
+
+    @Bean
+    RemoteControl remoteControl(SmartHome smartHome, Alarm alarm, CommandSender sender) {
+        return new RemoteControlImplBuilder()
+                .addCommand("A", new ActivateAlarmCommand(alarm, "111"))
+                .addCommand("B", new SetAlarmOnAlertCommand(alarm))
+                .addCommand("C", new CloseFrontDoorCommand(smartHome, sender))
+                .addCommand("D", new CloseFrontDoorCommand(smartHome, sender))
+                .addCommand("1", new TurnLightInRoomOnCommand(smartHome, sender, "hall"))
+                .addCommand("2", new TurnLightOffCommand(smartHome, sender))
+                .addCommand("3", new TurnLightOnCommand(smartHome, sender))
+                .getResult();
+    }
+
+    @Bean
+    RemoteControlRegistry remoteControlRegistry(Collection<RemoteControl> remoteControls) {
+        RemoteControlRegistry remoteControlRegistry = new RemoteControlRegistry();
+        int id = 0;
+        for (var rc : remoteControls) {
+            remoteControlRegistry.registerRemoteControl(rc, "" + id);
+            ++id;
+        }
+        return  remoteControlRegistry;
     }
 }

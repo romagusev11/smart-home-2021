@@ -41,7 +41,8 @@ public class HallDoorEventHandlerTest {
         hallDoorSensorEventHandler.handleEvent(event);
 
         Action assertAllLightIsOffAction = object -> {
-            if (object instanceof Light light) {
+            if (object instanceof Light) {
+                Light light = (Light) object;
                 assertFalse(light.isOn());
             }
         };

@@ -21,7 +21,8 @@ public class IsLightInRoomAction implements Action {
         if (object instanceof Room) {
             currentRoom = ((Room) object).getName();
         }
-        if (object instanceof Light light) {
+        if (object instanceof Light) {
+            Light light = (Light) object;
             if (light.getId().equals(lightId) && currentRoom.equals(roomName)) {
                 result = true;
             }

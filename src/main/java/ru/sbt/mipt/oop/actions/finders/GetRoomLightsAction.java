@@ -22,7 +22,8 @@ public class GetRoomLightsAction implements Action {
         if (object instanceof Room) {
             currentRoom = ((Room) object).getName();
         }
-        if (object instanceof Light light) {
+        if (object instanceof Light) {
+            Light light = (Light) object;
             if (currentRoom.equals(roomName)) {
                 result.add(light.getId());
             }

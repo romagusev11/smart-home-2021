@@ -19,7 +19,8 @@ public class OpenDoorAction implements Action {
 
     @Override
     public void execute(Actionable object) {
-        if (object instanceof Door door) {
+        if (object instanceof Door) {
+            Door door = (Door) object;
             if (door.getId().equals(doorId)) {
                 door.setOpen(true);
                 SensorCommand command = new SensorCommand(CommandType.OPEN_DOOR, door.getId());

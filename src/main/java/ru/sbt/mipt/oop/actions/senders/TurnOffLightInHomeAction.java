@@ -16,7 +16,8 @@ public class TurnOffLightInHomeAction implements Action {
 
     @Override
     public void execute(Actionable object) {
-        if (object instanceof Light light) {
+        if (object instanceof Light) {
+            Light light = (Light) object;
             light.setOn(false);
             SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
             sender.sendCommand(command);

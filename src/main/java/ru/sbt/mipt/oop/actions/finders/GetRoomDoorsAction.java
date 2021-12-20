@@ -22,7 +22,8 @@ public class GetRoomDoorsAction implements Action {
         if (object instanceof Room) {
             currentRoom = ((Room) object).getName();
         }
-        if (object instanceof Door door) {
+        if (object instanceof Door) {
+            Door door = (Door) object;
             if (currentRoom.equals(roomName)) {
                 result.add(door.getId());
             }

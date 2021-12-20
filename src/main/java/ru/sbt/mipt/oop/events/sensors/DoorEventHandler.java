@@ -21,7 +21,8 @@ public class DoorEventHandler implements EventHandler {
 
     @Override
     public void handleEvent(Event event) {
-        if (event instanceof SensorEvent sensorEvent) {
+        if (event instanceof SensorEvent) {
+            SensorEvent sensorEvent = (SensorEvent) event;
             if (sensorEvent.getType() == DOOR_OPEN) {
                 openDoor(sensorEvent.getObjectId());
             }

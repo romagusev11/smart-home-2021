@@ -1,15 +1,14 @@
 ---
 - name: Install Smar-Home App
-  hosts: centos
+  hosts: all
 
   vars:
     dest: /tmp/gusev/
-    java: /usr/lib/jvm/java-17-openjdk/bin/java
 
   tasks:
     - name: Install JDK for CentOS
       yum:
-        name: java-17-openjdk-devel
+        name: java-11-openjdk-devel
         state: latest
       when:
         ansible_distribution == "CentOS"
@@ -18,7 +17,7 @@
 
     - name: Install JDK for Debian
       apt:
-        name: ???
+        name: openjdk-11-jdk
         state: latest
       when:
         ansible_distribution == "Debian"
@@ -46,5 +45,5 @@
 
     - name: Execute JAR
       ansible.builtin.shell:
-        cmd: "{{java}} -jar {{ dest }}/smart-home.jar"
+        cmd: java -jar {{ dest }}/smart-home.jar
 ...

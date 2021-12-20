@@ -22,7 +22,8 @@ public class HallDoorEventHandler implements EventHandler {
     public void handleEvent(Event event) {
         // если мы получили событие о закрытие двери в холле - это значит, что была закрыта входная дверь.
         // в этом случае мы хотим автоматически выключить свет во всем доме (это же умный дом!)
-        if (event instanceof SensorEvent sensorEvent) {
+        if (event instanceof SensorEvent) {
+            SensorEvent sensorEvent = (SensorEvent) event;
             if (sensorEvent.getType() == DOOR_CLOSED) {
                 IsDoorInRoomAction action = new IsDoorInRoomAction(sensorEvent.getObjectId(), "hall");
                 smartHome.execute(action);

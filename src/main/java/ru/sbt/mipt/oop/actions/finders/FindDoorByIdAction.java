@@ -14,7 +14,8 @@ public class FindDoorByIdAction implements Action {
 
     @Override
     public void execute(Actionable object) {
-        if (object instanceof Door door) {
+        if (object instanceof Door) {
+            Door door = (Door) object;
             if (door.getId().equals(doorId)) {
                 result = door;
             }

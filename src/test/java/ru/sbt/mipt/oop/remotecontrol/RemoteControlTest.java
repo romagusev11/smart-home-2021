@@ -107,7 +107,8 @@ public class RemoteControlTest {
         remoteControl.onButtonPressed("2", rcId);
 
         Action assertAllLightIsOffAction = object -> {
-            if (object instanceof Light light) {
+            if (object instanceof Light) {
+                Light light = (Light) object;
                 assertFalse(light.isOn());
             }
         };
@@ -119,7 +120,8 @@ public class RemoteControlTest {
         remoteControl.onButtonPressed("3", rcId);
 
         Action assertAllLightIsOnAction = object -> {
-            if (object instanceof Light light) {
+            if (object instanceof Light) {
+                Light light = (Light) object;
                 assertTrue(light.isOn());
             }
         };

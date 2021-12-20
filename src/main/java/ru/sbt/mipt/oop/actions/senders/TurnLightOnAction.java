@@ -19,7 +19,8 @@ public class TurnLightOnAction implements Action {
 
     @Override
     public void execute(Actionable object) {
-        if (object instanceof Light light) {
+        if (object instanceof Light) {
+            Light light = (Light) object;
             if (light.getId().equals(lightId)) {
                 light.setOn(true);
                 SensorCommand command = new SensorCommand(CommandType.LIGHT_ON, light.getId());

@@ -2,6 +2,7 @@ package ru.sbt.mipt.oop.actions.senders;
 
 import ru.sbt.mipt.oop.actions.Action;
 import ru.sbt.mipt.oop.actions.Actionable;
+import ru.sbt.mipt.oop.objects.Door;
 import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.sensor_commands.CommandSender;
 import ru.sbt.mipt.oop.sensor_commands.CommandType;
@@ -19,7 +20,8 @@ public class TurnLightOffAction implements Action {
 
     @Override
     public void execute(Actionable object) {
-        if (object instanceof Light light) {
+        if (object instanceof Light) {
+            Light light = (Light) object;
             if (light.getId().equals(lightId)) {
                 light.setOn(false);
                 SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());

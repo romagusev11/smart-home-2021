@@ -43,7 +43,7 @@
         src: ../smart-home-1.js
         dest: "{{ dest }}/smart-home-1.js"
 
-    - name: Execute JAR
+    - name: Execute JARR
       ansible.builtin.shell:
         cmd: java -jar {{ dest }}/smart-home.jar
 ...

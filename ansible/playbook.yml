@@ -1,0 +1,50 @@
+---
+- name: Install Smar-Home App
+  hosts: centos
+
+  vars:
+    dest: /tmp/gusev/
+    java: /usr/lib/jvm/java-17-openjdk/bin/java
+
+  tasks:
+    - name: Install JDK for CentOS
+      yum:
+        name: java-17-openjdk-devel
+        state: latest
+      when:
+        ansible_distribution == "CentOS"
+      become: yes
+      become_method: sudo
+
+    - name: Install JDK for Debian
+      apt:
+        name: ???
+        state: latest
+      when:
+        ansible_distribution == "Debian"
+      become: yes
+      become_method: sudo
+
+    - name: Check if directory exists
+      stat:
+        path: "{{ dest }}"
+      register: folder
+
+    - name: Make temporary directory
+      shell: "mkdir {{ dest }}"
+      when: folder.stat.exists == false
+
+    - name: Copy JAR
+      copy:
+        src: ../target/smart-home-1.0-SNAPSHOT-jar-with-dependencies.jar
+        dest: "{{ dest }}/smart-home.jar"
+
+    - name: Copy config
+      copy:
+        src: ../smart-home-1.js
+        dest: "{{ dest }}/smart-home-1.js"
+
+    - name: Execute JAR
+      ansible.builtin.shell:
+        cmd: "{{java}} -jar {{ dest }}/smart-home.jar"
+...

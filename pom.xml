@@ -20,6 +20,7 @@
                     <source>17</source>
                     <target>17</target>
                     <compilerArgs>--enable-preview</compilerArgs>
+                    <executable>/usr/lib/jvm/java-17-openjdk/bin/java</executable>
                 </configuration>
             </plugin>
             <plugin>

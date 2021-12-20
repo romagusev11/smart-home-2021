@@ -2,7 +2,6 @@ package ru.sbt.mipt.oop.actions.senders;
 
 import ru.sbt.mipt.oop.actions.Action;
 import ru.sbt.mipt.oop.actions.Actionable;
-import ru.sbt.mipt.oop.objects.Door;
 import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.sensor_commands.CommandSender;
 import ru.sbt.mipt.oop.sensor_commands.CommandType;

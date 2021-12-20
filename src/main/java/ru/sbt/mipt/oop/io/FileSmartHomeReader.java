@@ -21,7 +21,7 @@ public class FileSmartHomeReader implements SmartHomeReader {
             String json = new String(Files.readAllBytes(Paths.get(filename)));
             return gson.fromJson(json, SmartHome.class);
         } catch (IOException e) {
-            throw new RuntimeException("Can't load SmartHome from " + filename + "\n" + e.getMessage());
+            throw new CantLoadSmartHomeException("Can't load SmartHome from " + filename + "\n" + e.getMessage());
         }
 
     }

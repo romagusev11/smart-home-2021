@@ -23,7 +23,7 @@ public class CloseFrontDoorCommand implements Command {
         smartHome.execute(action);
         List<String> doorIds = action.payload();
         if (doorIds.size() != 1) {
-            throw new RuntimeException("Can't find front door!");
+            throw new CantFindFrontDoorException("Can't find front door!");
         }
 
         CloseDoorAction closeDoorAction = new CloseDoorAction(doorIds.get(0), sender);

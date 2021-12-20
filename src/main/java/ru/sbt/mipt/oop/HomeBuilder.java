@@ -1,5 +1,6 @@
 package ru.sbt.mipt.oop;
 
+import com.coolcompany.smarthome.sample.Sample;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.sbt.mipt.oop.objects.Door;
@@ -32,11 +33,15 @@ public class HomeBuilder {
         SmartHome smartHome = new SmartHome(Arrays.asList(kitchen, bathroom, bedroom, hall));
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(smartHome);
-        System.out.println(jsonString);
+        Logger logger = str -> {};
+        logger.log(jsonString);
         Path path = Paths.get(args[0]);
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
             writer.write(jsonString);
         }
     }
 
+    private interface Logger {
+        void log(String str);
+    }
 }

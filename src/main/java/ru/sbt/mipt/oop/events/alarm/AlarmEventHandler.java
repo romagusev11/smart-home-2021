@@ -3,7 +3,6 @@ package ru.sbt.mipt.oop.events.alarm;
 import ru.sbt.mipt.oop.alarm.Alarm;
 import ru.sbt.mipt.oop.events.Event;
 import ru.sbt.mipt.oop.events.EventHandler;
-import ru.sbt.mipt.oop.events.sensors.SensorEvent;
 
 public class AlarmEventHandler implements EventHandler {
     private final Alarm alarm;
